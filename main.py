@@ -1,6 +1,6 @@
-from agent import QLearningAgent
-from env import FootballCoordinatorEnv
-from util import visualize_q_table
+from Agents.agent import QLearningAgent
+from Environments.env import FootballCoordinatorEnv
+from utils.util import visualize_q_table
 
 # Create the environment and agent
 env = FootballCoordinatorEnv()
