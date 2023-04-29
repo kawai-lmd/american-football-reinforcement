@@ -18,6 +18,12 @@ class QLearningAgent:
         else:
             return np.argmax(self.q_table[state_idx])
 
+    def choose_best_action(self, state):
+        down, distance_to_go = state
+        state_idx = (down - 1, distance_to_go - 1)
+
+        return np.argmax(self.q_teble[state_idx])
+
     def update(self, state, action, next_state, reward):
         down, distance_to_go = state
         state_idx = (down - 1, distance_to_go - 1)

@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 def visualize_q_table(q_table):
     n_downs, n_positions, n_actions = q_table.shape
@@ -22,4 +23,24 @@ def visualize_q_table(q_table):
     cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
     fig.colorbar(im, cax=cbar_ax)
 
+    plt.show()
+
+def visualize_simulation():
+    # Run playの確率密度関数
+    run_p = [0.5, 0.3, 0.2]
+    run_x = [1, 2, 3]
+
+    # Pass playの確率密度関数
+    pass_p = [0.5, 0.3, 0.2]
+    pass_x = [0, 5, 10]
+
+    x = np.arange(0, 11, 1)  # ランの獲得ヤード数の範囲
+
+    plt.bar(run_x, run_p, label='Run play')
+    plt.bar(pass_x, pass_p, label='Pass play')
+    plt.vlines(np.dot(run_x, run_p), 0, 0.6, colors='blue', label='Expected yards (run play)')
+    plt.vlines(np.dot(pass_x, pass_p), 0, 0.6, colors='orange', label='Expected yards (pass play)')
+    plt.legend()
+    plt.xlabel('Yards gained')
+    plt.ylabel('Probability density')
     plt.show()

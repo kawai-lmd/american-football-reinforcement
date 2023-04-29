@@ -1,9 +1,10 @@
+import pickle
 from Agents.agent import QLearningAgent
 from Environments.env import FootballCoordinatorEnv
-from utils.util import visualize_q_table
 
-# Create the environment and agent
+# Create a coordinator environment
 env = FootballCoordinatorEnv()
+# Create an instance of the Q-learning agent
 agent = QLearningAgent(env)
 
 # Train the agent
@@ -13,13 +14,11 @@ for episode in range(n_episodes):
     done = False
 
     while not done:
-        # env.render()
         action = agent.choose_action(state)
         next_state, reward, done, _ = env.step(action)
         agent.update(state, action, next_state, reward)
         state = next_state
 
-print(agent.q_table)
-
-# Visualize the agent's Q-table
-# visualize_q_table(agent.q_table)
+# Save the trained model
+with open('QL_agent.pickle', 'wb') as f:
+    pickle.dump(agent, f)
