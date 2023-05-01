@@ -1,30 +1,45 @@
 import numpy as np
 import gymnasium as gym
 import pickle
+from Agents.agent import *
+from Environments.env import FootballCoordinatorEnv
+from utils.util import *
 
-class QLearningAgent:
-    def __init__(self, env, alpha=0.1, gamma=0.99, epsilon=0.1):
-        self.env = env
-        self.alpha = alpha
-        self.gamma = gamma
-        self.epsilon = epsilon
-        self.q_table = np.zeros((4, 10, 2))
+env = FootballCoordinatorEnv()
 
-    def choose_action(self, state):
-        down, distance_to_go = state
-        state_idx = (down - 1, distance_to_go - 1)
+# Load the Q-learning agent
+with open('./models/QL_agent_1,000,000.pickle', 'rb') as f:
+    q_learning_agent = pickle.load(f)
 
-        return np.argmax(self.q_table[state_idx])
+# Create other agents
+random_agent = RandomAgent(env)
+run_agent = RunAgent(env)
+pass_agent = PassAgent(env)
 
-# モデルを読み込む
-with open('trained_agent.pickle', 'rb') as f:
-    trained_agent = pickle.load(f)
+# Create a dictionary of agents
+agents = {
+    "q_learning_agent": q_learning_agent,
+    "random_agent": random_agent,
+    "run_agent": run_agent,
+    "pass_agent": pass_agent
+}
 
-# 状態を取得
-state = env.reset()
+# Simulate each agent for 100,000 episodes
+n_episodes = 100000
+results = {agent_name: 0 for agent_name in agents}
 
-# 状態に基づいて行動を選択
-action = trained_agent.choose_action(state)
+for episode in range(n_episodes):
+    for agent_name, agent in agents.items():
+        state = env.reset()
+        done = False
 
-# 選択した行動を環境に渡す
-next_state, reward, done, info = env.step(action)
+        while not done:
+            action = agent.choose_best_action(state)
+            next_state, reward, done, _ = env.step(action)
+            state = next_state
+
+        results[agent_name] += env.first_down_num
+
+# Print the results
+for agent_name, wins in results.items():
+    print(f"{agent_name} wins: {wins}")

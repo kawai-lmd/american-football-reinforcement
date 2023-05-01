@@ -15,6 +15,8 @@ class FootballCoordinatorEnv(gym.Env):
             spaces.Discrete(10)
         ))
 
+        self.first_down_num = 0
+
         self.reset()
 
     def step(self, action):
@@ -26,6 +28,7 @@ class FootballCoordinatorEnv(gym.Env):
         if self.distance_to_go <= 0:
             self.down = 1
             self.distance_to_go = 10
+            self.first_down_num += 1
         else:
             self.down += 1
 
@@ -42,6 +45,7 @@ class FootballCoordinatorEnv(gym.Env):
     def reset(self):
         self.down = 1
         self.distance_to_go = 10
+        self.first_down_num = 0
         return (self.down, self.distance_to_go)
 
     def render(self, mode='human'):

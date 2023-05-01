@@ -44,3 +44,14 @@ def visualize_simulation():
     plt.xlabel('Yards gained')
     plt.ylabel('Probability density')
     plt.show()
+
+def visualize_q_convergence(q_diffs):
+
+    # Visualize the Q-value convergence
+    plt.plot(q_diffs)
+    plt.xlabel('Iteration')
+    plt.ylabel('Max Q-value difference')
+    plt.title('Q-value convergence')
+    plt.show()
+
+    return 0
