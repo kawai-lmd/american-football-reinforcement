@@ -37,9 +37,10 @@ def q_train_v2(env, o_agent, d_agent, n_episodes = 1000000):
         done = False
 
         while not done:
-            action = o_agent.choose_action(state)
-            next_state, reward, done, _ = env.step(action)
-            o_agent.update(state, action, next_state, reward)
+            o_action = o_agent.choose_action(state)
+            d_action = d_agent.choose_rule_action(state)
+            next_state, reward, done, _ = env.step(o_action, d_action)
+            o_agent.update(state, o_action, next_state, reward[0])
             state = next_state
 
         q_diff = np.abs(o_agent.q_table - prev_q_table).max()

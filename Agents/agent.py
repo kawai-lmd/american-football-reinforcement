@@ -36,6 +36,42 @@ class QLearningAgent:
 
         new_value = (1 - self.alpha) * old_value + self.alpha * (reward + self.gamma * next_max)
         self.q_table[state_idx][action] = new_value
+
+class OffenseQLearningAgentV2:
+    def __init__(self, env, alpha=0.1, gamma=0.99, epsilon=0.1):
+        self.env = env
+        self.alpha = alpha
+        self.gamma = gamma
+        self.epsilon = epsilon
+        self.q_table = np.zeros((4, 10, 2))
+
+    def choose_action(self, state):
+        down, distance_to_go = state
+        state_idx = (down - 1, distance_to_go - 1)
+
+        if random.uniform(0, 1) < self.epsilon:
+            return self.env.offense_action_space.sample()
+        else:
+            return np.argmax(self.q_table[state_idx])
+
+    def choose_best_action(self, state):
+        down, distance_to_go = state
+        state_idx = (down - 1, distance_to_go - 1)
+
+        return np.argmax(self.q_table[state_idx])
+
+    def update(self, state, action, next_state, reward):
+        down, distance_to_go = state
+        state_idx = (down - 1, distance_to_go - 1)
+
+        next_down, next_distance_to_go = next_state
+        next_state_idx = (next_down - 1, next_distance_to_go - 1)
+
+        old_value = self.q_table[state_idx][action]
+        next_max = np.max(self.q_table[next_state_idx])
+
+        new_value = (1 - self.alpha) * old_value + self.alpha * (reward + self.gamma * next_max)
+        self.q_table[state_idx][action] = new_value
 class RandomAgent:
     def __init__(self, env):
         self.env = env
@@ -56,3 +92,16 @@ class PassAgent:
 
     def choose_best_action(self, state):
         return 1
+
+class DefenceAgentV2:
+    def __init__(self, env):
+        self.env = env
+
+    def choose_rule_action(self, state):
+        down, distance_to_go = state
+        if down == 1:
+            return 0
+        elif down == 2:
+            return 1
+        else:
+            return 2
