@@ -1,4 +1,4 @@
-#　American Football Reinforcement Learning
+# American Football Reinforcement Learning
 main.このリポジトリは、強化学習を使用してアメリカンフットボールの戦略を自動化するためのコードとデータを提供します。このプロジェクトは、アメリカンフットボールの戦略決定における人間の意思決定を自動化し、より効率的かつ正確なプレイメイキングを実現することを目的としています。
 
 ## インストール
