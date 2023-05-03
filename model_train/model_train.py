@@ -25,7 +25,6 @@ def q_train(env, agent, n_episodes = 1000000):
 
     return q_diffs
 
-
 def q_train_v2(env, o_agent, d_agent, n_episodes = 1000000):
 
     q_diffs = []
