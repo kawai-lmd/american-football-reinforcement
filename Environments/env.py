@@ -72,7 +72,7 @@ class MultiCoordinaterEnv(gym.Env):
         # Action space: 0 - run play, 1 - pass play
         self.offense_action_space = spaces.Discrete(2)
         # Action space: 0 - vs run play, 1 - medium play, 2 - vs pass play
-        self.defense_action_space = spaces.Discrete(3)
+        self.defense_action_space = spaces.Discrete(4)
 
         # Observation space: down (1-4), distance to go (1-10)
         self.observation_space = spaces.Tuple((
