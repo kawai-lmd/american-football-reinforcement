@@ -94,6 +94,9 @@ class PassAgent:
         return 1
 
 class DefenceAgentV2:
+    '''
+    downをベースとしてルールを決定していくモデル。
+    '''
     def __init__(self, env):
         self.env = env
 
@@ -105,3 +108,19 @@ class DefenceAgentV2:
             return 1
         else:
             return 2
+
+class DefenceAgentV3:
+    '''
+    distance to goをベースとしてルールを決定していくモデル。
+    '''
+    def __init__(self, env):
+        self.env = env
+
+    def choose_rule_action(self, state):
+        down, distance_to_go = state
+        if distance_to_go == 10:
+            return 2
+        elif distance_to_go >= 5:
+            return 1
+        else:
+            return 0
