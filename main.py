@@ -22,4 +22,4 @@ for episode in range(n_episodes):
 print(agent.q_table)
 
 # Visualize the agent's Q-table
-# visualize_q_table(agent.q_table)
+visualize_q_table(agent.q_table)
