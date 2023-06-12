@@ -25,7 +25,7 @@ def q_train(env, agent, n_episodes = 1000000):
 
     return q_diffs
 
-def q_train_v2(env, o_agent, d_agent, n_episodes = 1000000):
+def q_train_v2(env, o_agent, d_agent, n_episodes = 1000000, prefix = "normal"):
 
     q_diffs = []
 
@@ -45,7 +45,7 @@ def q_train_v2(env, o_agent, d_agent, n_episodes = 1000000):
         q_diff = np.abs(o_agent.q_table - prev_q_table).max()
         q_diffs.append(q_diff)
 
-    with open(f'./models/q_agent_v2_{n_episodes}.pickle', 'wb') as f:
+    with open(f'./models/q_agent_v2_{n_episodes}_{prefix}.pickle', 'wb') as f:
         pickle.dump(o_agent, f)
 
     return q_diffs

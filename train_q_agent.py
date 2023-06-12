@@ -10,9 +10,9 @@ env = MultiCoordinaterEnv()
 # Create an instance of the Q-learning agent
 o_agent = OffenseQLearningAgentV2(env)
 # Create an instance of deffence agent
-d_agent = DefenceAgentV3(env)
+d_agent = DefenceAgentV4(env)
 
-q_diffs = q_train_v2(env, o_agent, d_agent, 10000)
+q_diffs = q_train_v2(env, o_agent, d_agent, 100000)
 
 visualize_q_convergence(q_diffs)
 # Visualize the agent's Q-table

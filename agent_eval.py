@@ -2,27 +2,30 @@ import numpy as np
 import gymnasium as gym
 import pickle
 from Agents.agent import *
-from Environments.env import FootballCoordinatorEnv
+from Environments.env import *
 from utils.util import *
 
-env = FootballCoordinatorEnv()
+env = MultiCoordinaterEnv()
 
 # Load the Q-learning agent
-with open('./models/QL_agent_1,000,000.pickle', 'rb') as f:
-    q_learning_agent = pickle.load(f)
+with open('./models/q_agent_v2_100000_q1.pickle', 'rb') as f:
+    q_learning_agent_v1 = pickle.load(f)
+with open('./models/q_agent_v2_100000_q2.pickle', 'rb') as f:
+    q_learning_agent_v2 = pickle.load(f)
+with open('./models/q_agent_v2_100000_q3.pickle', 'rb') as f:
+    q_learning_agent_v3 = pickle.load(f)
+with open('./models/q_agent_v2_100000_q4.pickle', 'rb') as f:
+    q_learning_agent_v4 = pickle.load(f)
 
 # Create other agents
 random_agent = RandomAgent(env)
-run_agent = RunAgent(env)
-pass_agent = PassAgent(env)
 
 # Create a dictionary of agents
 agents = {
-    "q_learning_agent": q_learning_agent,
+    "q_learning_agent": q_learning_agent_v1,
     "random_agent": random_agent,
-    "run_agent": run_agent,
-    "pass_agent": pass_agent
 }
+d_agent = DefenceAgentV1(env)
 
 # Simulate each agent for 100,000 episodes
 n_episodes = 100000
@@ -35,7 +38,8 @@ for episode in range(n_episodes):
 
         while not done:
             action = agent.choose_best_action(state)
-            next_state, reward, done, _ = env.step(action)
+            d_action = d_agent.choose_rule_action(state)
+            next_state, reward, done, _ = env.step(action, d_action)
             state = next_state
 
         results[agent_name] += env.first_down_num

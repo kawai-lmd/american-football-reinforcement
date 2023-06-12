@@ -1,6 +1,7 @@
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
+import random
 
 class FootballCoordinatorEnv(gym.Env):
     def __init__(self):
@@ -106,7 +107,7 @@ class MultiCoordinaterEnv(gym.Env):
         reward = [offense_reward, defense_reward]
 
         # Check if the episode has ended
-        done = self.down > 4
+        done = self.down > 4 or self.first_down_num > 5
         if done:
             self.down = 1
 

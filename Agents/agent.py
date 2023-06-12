@@ -93,6 +93,16 @@ class PassAgent:
     def choose_best_action(self, state):
         return 1
 
+class DefenceAgentV1:
+    '''
+    RandomAgent
+    '''
+    def __init__(self, env):
+        self.env = env
+
+    def choose_rule_action(self, state):
+        return random.randint(0, 2)
+
 class DefenceAgentV2:
     '''
     downをベースとしてルールを決定していくモデル。
@@ -124,3 +134,19 @@ class DefenceAgentV3:
             return 1
         else:
             return 0
+
+class DefenceAgentV4:
+    '''
+    downをベースとしてルールを決定していくモデル。
+    '''
+    def __init__(self, env):
+        self.env = env
+
+    def choose_rule_action(self, state):
+        down, distance_to_go = state
+        if down == 1:
+            return 1
+        elif down == 2 or down == 3:
+            return 0
+        else:
+            return 2
